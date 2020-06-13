@@ -12,7 +12,7 @@ Vue.component('product-details', {
     </ul>`
 })
 
-
+//product info goes here
 Vue.component('product', {
     props: {
         premium: {
@@ -52,7 +52,7 @@ Vue.component('product', {
         </div>`,
 
 
-    //data goes here separate from HTML
+    //data goes here 
     data() {
         return {
             brand: 'Vue Mastery',
@@ -123,6 +123,7 @@ Vue.component('product', {
 var app = new Vue({
     el: '#app',
     data: {
+        //for prime members 
         premium: true
     }
 })
