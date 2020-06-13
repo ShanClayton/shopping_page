@@ -1,3 +1,4 @@
+//created component from details in data
 Vue.component('product-details', {
     props: {
         details: {
@@ -7,7 +8,7 @@ Vue.component('product-details', {
     },
     template: `
     <ul>
-    <li v-for="details in details">{{ detail }}</li>
+    <li v-for="detail in details">{{ detail }}</li>
     </ul>`
 })
 
@@ -29,16 +30,13 @@ Vue.component('product', {
             </div>
 
             <div class="product-info">
-                <h1>{{ title }}</h1>
+                <h1>{{product }}</h1>
                 <!-- conditional rendering -->
                 <p v-if="inStock">In Stock</p>
                 <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
-                <p>{{ sale }}</p>
+                <!-- <p>{{ sale }}</p> -->
                 <p> Shipping: {{ shipping}}</p>
-                <product-details :details= "details"></product-details>
-                <ul>
-                    <li v-for="detail in details">{{ detail }}</li>
-                </ul>
+                 <product-details :details="details"></product-details>
                 <!-- binding a style with mouseover -->
                 <div v-for="(variant,index) in variants" :key="variant.variantId" class="color-box"
                     :style="{backgroundColor: variant.variantColor}" @mouseover="updateProduct(index)">
@@ -53,6 +51,8 @@ Vue.component('product', {
             </div>
         </div>`,
 
+
+    //data goes here separate from HTML
     data() {
         return {
             brand: 'Vue Mastery',
