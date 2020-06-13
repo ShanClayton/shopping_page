@@ -10,14 +10,32 @@ var app = new Vue({
         details: ["75% bamboo", "22% polyamide", "3% spandex", "Gender-neutral"],
         variants: [{
                 variantId: 1234,
-                variantColor: "green"
+                variantColor: 'green',
+                variantImage: './assets/Greensocks.jpg'
             },
             {
                 varidantId: 4321,
-                variantColor: "pink"
+                variantColor: 'blue',
+                variantImage: './assets/bluesocks.jpg'
             }
         ],
-        // sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL']
         cart: 0
+    },
+    methods: {
+        // increment
+        addToCart() {
+            this.cart += 1
+        },
+        //decrement
+        removeFromCart() {
+            this.cart -= 1
+        },
+        //mouseover
+        updateProduct(variantImage) {
+            this.image = variantImage
+        }
     }
 })
+
+//not all browsers will support es6 version of function addToCart: function ()
+// sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL']
