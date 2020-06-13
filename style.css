@@ -88,4 +88,6 @@
      text-decoration: underline;
  }
 
- a
+ .outOfStock {
+     text-decoration: line-through;
+ }

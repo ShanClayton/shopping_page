@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <title>Document</title>
+    <title>Vue Shopping Page</title>
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -24,23 +24,20 @@
             <div class="product-info">
                 <h1>{{ product }}</h1>
                 <!-- conditional rendering -->
-                <p v-show="inStock">In Stock</p>
-                <!-- <span v-if="onSale">Sale!</span> -->
-                <!-- <p v-if="inventory > 10">In Stock</p>
-                <p v-else-if="inventory <=10 && inventory > 0">Almost sold out! Hurry!</p>
-                <p v-else="OutStock">Out of Stock</p> -->
-                <!-- <a :href="link" target="_blank">See more products like this</a> -->
+                <p v-if="inStock">In Stock</p>
+                <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
 
                 <ul>
                     <li v-for="detail in details">{{ detail }}</li>
                 </ul>
-
-                <div v-for="variant in variants" :key="variant.variantId">
-                    <p @mouseover="updateProduct(variant.variantImage)">{{ variant.variantColor }}</p>
+                <!-- binding a style with mouseover -->
+                <div v-for="variant in variants" :key="variant.variantId" class="color-box"
+                    :style="{backgroundColor: variant.variantColor}" @mouseover="updateProduct(variant.variantImage)">
                 </div>
 
-                <!-- increase cart number when clicked -->
-                <button v-on:click='addToCart'>Add to Cart</button> <button v-on:click='removeFromCart'>Remove</button>
+                <!-- increase cart number when clicked and class binding instock button turns grey with item is not in stock -->
+                <button v-on:click='addToCart' :disabled='!inStock' :class="{disabledButton: !inStock}">Add to
+                    Cart</button>
                 <div class="cart">
                     <p>Cart ({{cart}})</p>
                 </div>
