@@ -17,6 +17,7 @@ var app = new Vue({
                 variantColor: "pink"
             }
         ],
-        sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL']
+        // sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL']
+        cart: 0
     }
 })
