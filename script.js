@@ -3,12 +3,20 @@ Vue.component("product-review", {
   template: `
   <!--.prevent keeps page from refreshing -->
   <form class="review-form" @submit.prevent="onSubmit">
+  <p v-if="errors.length">
+      <b>Please correct the following error(s):</b>
+      <ul>
+      <li v-for="error in errors">
+      {{ error}}
+      </li>
+      </ul>
+      </p>
+      <p>
       <p>
         <label for="name">Name:</label>
         <input id="name" v-model="name" placeholder="name">
       </p>
       
-      <p>
         <label for="review">Review:</label>      
         <textarea id="review" v-model="review"></textarea>
       </p>
@@ -35,19 +43,26 @@ Vue.component("product-review", {
       name: null,
       review: null,
       rating: null,
+      errors: [],
     };
   },
   methods: {
     onSubmit() {
-      let productReview = {
-        name: this.name,
-        review: this.review,
-        rating: this.rating,
-      };
-      this.$emit("review-submited", productReview);
-      this.name = null;
-      this.review = null;
-      this.rating = null;
+      if (this.name && this.review && this.rating) {
+        let productReview = {
+          name: this.name,
+          review: this.review,
+          rating: this.rating,
+        };
+        this.$emit("review-submitted", productReview);
+        this.name = null;
+        this.review = null;
+        this.rating = null;
+      } else {
+        if (!this.name) this.errors.push("Name required.");
+        if (!this.review) this.errors.push("Review required.");
+        if (!this.rating) this.errors.push("Rating required.");
+      }
     },
   },
 });
@@ -103,9 +118,20 @@ Vue.component("product", {
 
                 
             </div>
-            <!-- nesting component in product info template so it will show up underneath -->
-            <product-review @review-submitted=
-            addReview></product-review>
+              <div>
+        <h2>Reviews</h2>
+        <p v-if="!reviews.length">There are no reviews yet.</p>
+        <ul>
+          <li v-for="review in reviews">
+          <p>{{ review.name }}</p>
+          <p>Rating: {{ review.rating }}</p>
+          <p>{{ review.review }}</p>
+          </li>
+        </ul>
+       </div>
+  
+        
+             <product-review @review-submitted="addReview"></product-review>    
         </div>`,
 
   //data goes here
