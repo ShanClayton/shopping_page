@@ -1,6 +1,7 @@
 //forms
 Vue.component("product-review", {
   template: `
+  <!--.prevent keeps page from refreshing -->
   <form class="review-form" @submit.prevent="onSubmit">
       <p>
         <label for="name">Name:</label>
@@ -35,6 +36,19 @@ Vue.component("product-review", {
       review: null,
       rating: null,
     };
+  },
+  methods: {
+    onSubmit() {
+      let productReview = {
+        name: this.name,
+        review: this.review,
+        rating: this.rating,
+      };
+      this.$emit("review-submited", productReview);
+      this.name = null;
+      this.review = null;
+      this.rating = null;
+    },
   },
 });
 
@@ -90,7 +104,8 @@ Vue.component("product", {
                 
             </div>
             <!-- nesting component in product info template so it will show up underneath -->
-            <product-review></product-review>
+            <product-review @review-submitted=
+            addReview></product-review>
         </div>`,
 
   //data goes here
@@ -115,8 +130,8 @@ Vue.component("product", {
           variantQuanity: 0,
         },
       ],
-
       onSale: false,
+      reviews: [],
     };
   },
   methods: {
@@ -134,6 +149,10 @@ Vue.component("product", {
     //mouseover
     updateProduct(index) {
       this.selectedVariant = index;
+    },
+    //add review
+    addReview(productReview) {
+      this.reviews.push(productReview);
     },
   },
   //computed properties are best used when you have expensive operation when you don't want to rerun it when you access it
